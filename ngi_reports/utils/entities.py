@@ -80,7 +80,12 @@ class Lane:
         elif to_set == 'fc_phix':
             self.phix = val
 
-
+class AbortedSampleInfo:
+    """Aborted Sample info class
+    """
+    def __init__(self, user_id, status):
+        self.status = status
+        self.user_id = user_id
 
 class Project:
     """Project class
@@ -123,20 +128,11 @@ class Project:
         self.skip_fastq = False
         self.user_ID = ''
 
-
-    class AbortedSampleInfo:
-        """Aborted Sample info class
-        """
-        def __init__(self, user_id, status):
-            self.status = status
-            self.user_id = user_id
-
-
     def populate(self, log, organism_names, **kwargs):
 
         project = kwargs.get('project', '')
         if not project:
-            raise SystemExit()
+            raise TypeError("No project argument supplied, exiting.")
         self.skip_fastq = kwargs.get('skip_fastq')
         self.cluster = kwargs.get('cluster')
         self.not_as_million = kwargs.get('not_as_million')
@@ -240,10 +236,6 @@ class Project:
             except KeyError:
                 log.warn('Sample {} doesnt have total reads, so adding it to NOT sequenced samples list.'.format(sample_id))
                 self.aborted_samples[sample_id] = AbortedSampleInfo(customer_name, 'Not sequenced')
-                ## dont gather unnecessary information if not going to be looked up
-                if not kwargs.get('yield_from_fc'):
-                    del self.samples[sample_id]
-                    continue
 
             ## Go through each prep for each sample in the Projects database
             for prep_id, prep in list(sample.get('library_prep', {}).items()):
