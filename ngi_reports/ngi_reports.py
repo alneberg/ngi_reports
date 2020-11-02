@@ -16,29 +16,32 @@ from ngi_reports.log import loggers
 from ngi_reports.utils import config as report_config
 from ngi_reports.utils.entities import Project
 
+import ngi_reports.reports.project_summary as ps_report
+import ngi_reports.reports.reception_control as rc_report
+
 LOG = loggers.minimal_logger('NGI Reports')
 
 ## CONSTANTS
 # create choices for report type based on available report template
-allowed_report_types = [ fl.replace(".md","") for fl in os.listdir(os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, 'data', 'report_templates'))) ] + ['ign_aggregate_report']
+ALLOWED_REPORT_TYPES = {"project_summary": (ps_report, 'project_summary.md'),
+                        "reception_control": (rc_report, 'reception_control.html')}
 
 def make_reports (report_type, working_dir=os.getcwd(), config_file=None, **kwargs):
 
     # Setup
-    template_fn = '{}.md'.format(report_type)
     LOG.info('Report type: {}'.format(report_type))
 
     # use default config or override it if file is specified
     config = report_config.load_config(config_file)
 
-    # Import the modules for this report type
-    report_mod = __import__('ngi_reports.reports.{}'.format(report_type), fromlist=['ngi_reports.reports'])
+    # Set the modules for this report type
+    report_module, template_fn = ALLOWED_REPORT_TYPES[report_type]
 
     proj = Project()
     proj.populate(LOG, config._sections['organism_names'], **kwargs)
 
     # Make the report object
-    report = report_mod.Report(config, LOG, working_dir, **kwargs)
+    report = report_module.Report(config, LOG, working_dir, **kwargs)
 
     # Work out all of the directory names
     output_dir = os.path.realpath(os.path.join(working_dir, report.report_dir))
@@ -48,12 +51,11 @@ def make_reports (report_type, working_dir=os.getcwd(), config_file=None, **kwar
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    # Print the markdown output file
     # Load the Jinja2 template
     try:
         env = jinja2.Environment(loader=jinja2.FileSystemLoader(reports_dir))
-        template = env.get_template('{}.md'.format(report_type))
-    except:
+        template = env.get_template(template_fn)
+    except Exception:
         LOG.error('Could not load the Jinja report template')
         raise
 
@@ -61,28 +63,37 @@ def make_reports (report_type, working_dir=os.getcwd(), config_file=None, **kwar
     old_cwd = os.getcwd()
     os.chdir(report.report_dir)
 
-    # Get parsed markdown and print to file(s)
-    LOG.debug('Converting markdown to HTML...')
-    output_mds = report.generate_report_template(proj, template)
-    for output_bn, output_md in list(output_mds.items()):
-        try:
-            with open('{}.md'.format(output_bn), 'w', encoding='utf-8') as fh:
-                print(output_md, file=fh)
-        except IOError as e:
-            LOG.error("Error printing markdown report {} - skipping. {}".format(output_md, IOError(e)))
-            continue
-        #Convert markdown to html
-        html_out = markdown_to_html(report_type, jinja2_env=env, markdown_text=output_md, reports_dir=reports_dir,
-                                    out_path='{}.html'.format(output_bn))
-        LOG.info('{} HTML report written to: {}'.format(output_bn.rsplit('/', 1)[1], html_out))
+    if report_type == 'project_summary':
+        # Get parsed markdown and print to file(s)
+        LOG.debug('Converting markdown to HTML...')
+        output_mds = report.generate_report_template(proj, template)
+        for output_bn, output_md in list(output_mds.items()):
+            try:
+                with open('{}.md'.format(output_bn), 'w', encoding='utf-8') as fh:
+                    print(output_md, file=fh)
+            except IOError as e:
+                LOG.error("Error printing markdown report {} - skipping. {}".format(output_md, IOError(e)))
+                continue
+            # Convert markdown to html
+            html_out = markdown_to_html(report_type, jinja2_env=env, markdown_text=output_md, reports_dir=reports_dir,
+                                        out_path='{}.html'.format(output_bn))
+            LOG.info('{} HTML report written to: {}'.format(output_bn.rsplit('/', 1)[1], html_out))
 
-    # Generate CSV files for project_summary reports
-    if report_type == 'project_summary' and not kwargs['no_txt']:
-        try:
-            report.create_txt_files()
-            LOG.info('Generated TXT files...')
-        except:
-            LOG.error('Could not generate TXT files...')
+        # Generate CSV files for project_summary reports
+        if not kwargs['no_txt']:
+            try:
+                report.create_txt_files()
+                LOG.info('Generated TXT files...')
+            except Exception:
+                LOG.error('Could not generate TXT files...')
+                raise
+
+    elif report_type == 'reception_control':
+        LOG.debug('Generating HTML...')
+        output_bn, content = report.parse_template(template)
+
+        with open('{}'.format(output_bn), 'w', encoding='utf-8') as fh:
+            print(content, file=fh)
 
     # Change back to previous working dir
     os.chdir(old_cwd)
@@ -122,12 +133,12 @@ def markdown_to_html(report_type, jinja2_env=None, markdown_text=None, markdown_
 
 def main():
     parser = argparse.ArgumentParser("Make an NGI Report")
-    parser.add_argument('report_type', choices=allowed_report_types, metavar='<report type>',
-        help="Type of report to generate. Choose from: {}".format(', '.join(allowed_report_types)))
+    parser.add_argument('report_type', choices=ALLOWED_REPORT_TYPES.keys(), metavar='<report type>',
+        help="Type of report to generate. Choose from: {}".format(', '.join(ALLOWED_REPORT_TYPES.keys())))
     parser.add_argument("-d", "--dir", dest="working_dir", default=os.getcwd(),
         help="Working Directory. Default: cwd when script is executed.")
     parser.add_argument('-c', '--config_file', default=None, action="store", help="Configuration file to use instead of default (~/.ngi_config/ngi_reports.conf)")
-    parser.add_argument('-p', '--project', default=None, action="store", help="Project name to generate 'project_summary' report")
+    parser.add_argument('-p', '--project', default=None, action="store", help="Project name to generate report for.")
     parser.add_argument('-s', '--signature', default=None, action="store", help="Signature/Name for person who generates 'project_summary' report")
     parser.add_argument('-u', '--uppmax_id', default=None, action="store", help="Given UPPMAX id will be used while generating report")
     parser.add_argument('-q', '--quality', default=None, action="store", type=int, help="Q30 threshold for samples to set status")
