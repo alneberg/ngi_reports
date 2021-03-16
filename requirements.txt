@@ -3,4 +3,4 @@ mdx_outline
 jinja2
 couchdb
 pyyaml
-ngi_visualizations @ https://github.com/NationalGenomicsInfrastructure/ngi_visualizations/archive/master.zip
+numpy
