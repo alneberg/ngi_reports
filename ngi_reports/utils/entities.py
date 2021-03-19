@@ -13,19 +13,32 @@ class Sample:
     """Sample class
     """
     def __init__(self):
-        self.customer_name = ''
-        self.ngi_id        = ''
-        self.preps         = {}
-        self.qscore        = ''
-        self.total_reads   = ''
-        self.initial_qc    = { 'initial_qc_status' : '',
-                                'concentration': '',
-                                'conc_units':'',
-                                'volume_(ul)': '',
-                                'amount_(ng)': '',
-                                'rin': ''
-                                }
-        self.well_location = ''
+        self.customer_name = None
+        self.ngi_id = None
+        self.preps = {}
+        self.qscore = None
+        self.total_reads = None
+        self.initial_qc_amount_ng = None
+        self.initial_qc_concentration = None
+        self.initial_qc_conc_units = None
+        self.initial_qc_finish_date = None
+        self.initial_qc_status = None
+        self.initial_qc_rin = None
+        self.initial_qc_start_date = None
+        self.initial_qc_volume_ul = None
+
+        self.sample_buffer = None
+        self.sample_type = None
+        self.user_amount = None
+        self.user_concentration = None
+        self.user_concentration_method = None
+        self.user_rin = None
+        self.user_volume = None
+        self.well_location = None
+
+    def attributes_as_dict(self):
+        """python built-in vars method is not available inside jinja"""
+        return vars(self)
 
 class Prep:
     """Prep class
@@ -221,11 +234,30 @@ class Project:
             samObj.ngi_id        = sample_id
             samObj.customer_name = customer_name
             samObj.well_location = sample.get('well_location')
+
             ## Basic fields from Project database
+            # Reception control
+
+            if sample.get('details', {}):
+
+                samObj.sample_buffer = sample['details'].get('sample_buffer')
+                samObj.sample_type = sample['details'].get('sample_type')
+                samObj.user_concentration = sample['details'].get('customer_conc')
+                samObj.user_concentration_method = sample['details'].get('conc_method')
+                samObj.user_rin = sample['details'].get('customer_rin')
+                samObj.user_volume = sample['details'].get('customer_volume')
+                samObj.user_amount = sample['details'].get('customer_amount_(ug)')
+
             # Initial qc
             if sample.get('initial_qc'):
-                for item in samObj.initial_qc:
-                    samObj.initial_qc[item] = sample['initial_qc'].get(item)
+                samObj.initial_qc_amount_ng = sample['initial_qc'].get('amount_(ng)')
+                samObj.initial_qc_concentration = sample['initial_qc'].get('concentration')
+                samObj.initial_qc_conc_units = sample['initial_qc'].get('conc_units')
+                samObj.initial_qc_finish_date = sample['initial_qc'].get('finish_date')
+                samObj.initial_qc_status = sample['initial_qc'].get('initial_qc_status')
+                samObj.initial_qc_rin = sample['initial_qc'].get('rin')
+                samObj.initial_qc_start_date = sample['initial_qc'].get('start_date')
+                samObj.initial_qc_volume_ul = sample['initial_qc'].get('volume_(ul)')
 
             #Library prep
             ## get total reads if available or mark sample as not sequenced
