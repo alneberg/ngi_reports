@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 from ngi_reports import __version__
-import sys, os
+import sys
 
 
 try:
@@ -8,6 +8,9 @@ try:
         install_requires = [x.strip() for x in f.readlines()]
 except IOError:
     install_requires = []
+
+if sys.version_info.major < 3:
+    sys.exit('Sorry, only Python 3 is supported')
 
 setup(
     name='ngi_reports',
