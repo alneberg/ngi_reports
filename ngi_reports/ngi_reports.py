@@ -15,6 +15,8 @@ from ngi_reports import __version__
 from ngi_reports.log import loggers
 from ngi_reports.utils import config as report_config
 from ngi_reports.utils.entities import Project
+from ngi_reports.utils.template_helpers import include_file
+
 
 LOG = loggers.minimal_logger('NGI Reports')
 
@@ -62,6 +64,7 @@ def make_reports(report_type, working_dir=os.getcwd(), config_file=None, **kwarg
     except Exception:
         LOG.error('Could not load the Jinja environment')
         raise
+    env.globals['include_file'] = include_file
 
     if report_type == 'project_summary':
         # Print the markdown output file
