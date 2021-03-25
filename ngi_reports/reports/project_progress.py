@@ -39,6 +39,7 @@ class Report(ngi_reports.reports.BaseReport):
             }
         self.meta['nr_samples'] = 0
         self.meta['RC_passed'] = 0
+        self.meta['RC_status_width'] = 0
 
     def generate_report(self, proj, template, support_email):
         self.project = proj
@@ -50,6 +51,12 @@ class Report(ngi_reports.reports.BaseReport):
         for sample_id, sample in self.project.samples.items():
             if sample.initial_qc_status == 'PASSED':
                 self.meta['RC_passed'] += 1
+
+        self.meta['RC_progress_width'] = round(100 * self.meta['RC_passed'] / float(self.meta['nr_samples']))
+        if self.meta['RC_progress_width'] == 100:
+            self.meta['RC_progress_class'] = 'bg-success'
+        else:
+            self.meta['RC_progress_class'] = ''
 
         # Make the file basename
         output_bn = os.path.realpath(os.path.join(self.working_dir, self.report_dir, self.report_fn))
