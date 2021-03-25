@@ -30,18 +30,26 @@ class Report(ngi_reports.reports.BaseReport):
                 'user_amount': {'display_title': 'User Amount (&micro;g)', 'explanation': '', 'visible_by_default': False},
                 'initial_qc_concentration': {'display_title': 'Initial QC concentration', 'explanation': '', 'visible_by_default': False},
                 'initial_qc_conc_units': {'display_title': 'Concentration Units', 'explanation': '', 'visible_by_default': False},
-                'initial_qc_volume_ul': {'display_title': 'Volume (&micro;l)', 'explanation': '', 'visible_by_default': False},
-                'initial_qc_amount_ng': {'display_title': 'Amount (ng)', 'explanation': '', 'visible_by_default': False},
+                'initial_qc_volume_ul': {'display_title': 'Volume (&micro;l)', 'explanation': '', 'visible_by_default': True},
+                'initial_qc_amount_ng': {'display_title': 'Amount (ng)', 'explanation': '', 'visible_by_default': True},
                 'initial_qc_rin': {'display_title': 'RIN', 'explanation': '', 'visible_by_default': False},
-                'initial_qc_status': {'display_title': 'Initial QC Status', 'explanation': '', 'visible_by_default': False},
+                'initial_qc_status': {'display_title': 'Initial QC Status', 'explanation': '', 'visible_by_default': True},
                 'initial_qc_start_date': {'display_title': 'Initial QC Start Date', 'explanation': '', 'custom_classes': 'text_nowrap', 'visible_by_default': False},
-                'initial_qc_finish_date': {'display_title': 'Initial QC Finish Date', 'explanation': '', 'custom_classes': 'text_nowrap', 'visible_by_default': False}
+                'initial_qc_finish_date': {'display_title': 'Initial QC Finish Date', 'explanation': '', 'custom_classes': 'text_nowrap', 'visible_by_default': True}
             }
+        self.meta['nr_samples'] = 0
+        self.meta['RC_passed'] = 0
 
     def generate_report(self, proj, template, support_email):
         self.project = proj
         self.meta['subtitle'] = "{}_project_progress".format(self.project.ngi_name)
         self.meta['support_email'] = support_email
+
+        # Figure out nr of passed samples for each step
+        self.meta['nr_samples'] = len(self.project.samples)
+        for sample_id, sample in self.project.samples.items():
+            if sample.initial_qc_status == 'PASSED':
+                self.meta['RC_passed'] += 1
 
         # Make the file basename
         output_bn = os.path.realpath(os.path.join(self.working_dir, self.report_dir, self.report_fn))
