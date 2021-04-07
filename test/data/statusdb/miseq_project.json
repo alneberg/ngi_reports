@@ -1,0 +1,812 @@
+{
+    "_id": "e2fb90951bea09ba681fc8d4ce0044ef",
+    "_rev": "73-190937e9aafa3fd321e24fef5c0e89b8",
+    "project_summary": {
+        "method_document": "1262",
+        "bioinfo_responsible": "Bioinfo Bioinfosdaugher",
+        "all_raw_data_delivered": "2019-09-10",
+        "document_version": "14",
+        "signature_all_samples_sequenced": "BB",
+        "signature_queued": "LL",
+        "all_samples_sequenced": "2019-08-31",
+        "signature_all_raw_data_delivered": "BB",
+        "queued": "2019-07-02",
+        "instructions": "Do not finish this step before the project has ended. Make sure all information has been entered before finishing this step."
+    },
+    "staged_files": {
+        "P999_105": {
+            "P999_105/02-FASTQ/190828_M01245_0337_000000000-J88MX/P999_105_S5_L001_R2_001.fastq.gz": {
+                "size_in_bytes": 706461377,
+                "md5_sum": "8c32b37c8563ac3827b9894f9404522a",
+                "last_modified": "2019-09-02 14:48:35.989529"
+            },
+            "P999_105/02-FASTQ/190828_M01245_0337_000000000-J88MX/P999_105_S5_L001_R1_001.fastq.gz": {
+                "size_in_bytes": 599156396,
+                "md5_sum": "667db9e430bf88f9e7d51d02687f3162",
+                "last_modified": "2019-09-02 14:48:35.989529"
+            }
+        },
+        "P999_104": {
+            "P999_104/02-FASTQ/190828_M01245_0337_000000000-J88MX/P999_104_S4_L001_R1_001.fastq.gz": {
+                "size_in_bytes": 1258789886,
+                "md5_sum": "43c04d0bd3932b2faaba2d3d346c24af",
+                "last_modified": "2019-09-02 14:48:30.534351"
+            },
+            "P999_104/02-FASTQ/190828_M01245_0337_000000000-J88MX/P999_104_S4_L001_R2_001.fastq.gz": {
+                "size_in_bytes": 1475386007,
+                "md5_sum": "959c6ae48910706bc0eb2a15a4c836d6",
+                "last_modified": "2019-09-02 14:48:30.534351"
+            }
+        },
+        "P999_107": {
+            "P999_107/02-FASTQ/190828_M01245_0337_000000000-J88MX/P999_107_S7_L001_R1_001.fastq.gz": {
+                "size_in_bytes": 543869268,
+                "md5_sum": "6c0d73d2abe59febf3e050f75390f525",
+                "last_modified": "2019-09-02 14:48:48.446242"
+            },
+            "P999_107/02-FASTQ/190828_M01245_0337_000000000-J88MX/P999_107_S7_L001_R2_001.fastq.gz": {
+                "size_in_bytes": 640955871,
+                "md5_sum": "035a7527e4ba51e4243edd18d92b9818",
+                "last_modified": "2019-09-02 14:48:48.446242"
+            }
+        },
+        "P999_106": {
+            "P999_106/02-FASTQ/190828_M01245_0337_000000000-J88MX/P999_106_S6_L001_R1_001.fastq.gz": {
+                "size_in_bytes": 1090170736,
+                "md5_sum": "99d9442f81ad88db95a43504eeaa3c51",
+                "last_modified": "2019-09-02 14:48:43.466354"
+            },
+            "P999_106/02-FASTQ/190828_M01245_0337_000000000-J88MX/P999_106_S6_L001_R2_001.fastq.gz": {
+                "size_in_bytes": 1255914462,
+                "md5_sum": "42d17bcb229b972510cbe7c39459dc83",
+                "last_modified": "2019-09-02 14:48:43.466354"
+            }
+        },
+        "P999_101": {
+            "P999_101/02-FASTQ/190828_M01245_0337_000000000-J88MX/P999_101_S1_L001_R2_001.fastq.gz": {
+                "size_in_bytes": 953530745,
+                "md5_sum": "95049757d35e50bd82c58d35ce781506",
+                "last_modified": "2019-09-02 14:48:06.921468"
+            },
+            "P999_101/02-FASTQ/190828_M01245_0337_000000000-J88MX/P999_101_S1_L001_R1_001.fastq.gz": {
+                "size_in_bytes": 817322542,
+                "md5_sum": "cbd6df0de23ed9471ee8f0522677df74",
+                "last_modified": "2019-09-02 14:48:06.921468"
+            }
+        },
+        "P999_103": {
+            "P999_103/02-FASTQ/190828_M01245_0337_000000000-J88MX/P999_103_S3_L001_R2_001.fastq.gz": {
+                "size_in_bytes": 2022193973,
+                "md5_sum": "83e20926956b54d58ca8d18110586253",
+                "last_modified": "2019-09-02 14:48:22.696036"
+            },
+            "P999_103/02-FASTQ/190828_M01245_0337_000000000-J88MX/P999_103_S3_L001_R1_001.fastq.gz": {
+                "size_in_bytes": 1743848564,
+                "md5_sum": "0d971e6d5e77e48332ff8aa5b962547c",
+                "last_modified": "2019-09-02 14:48:22.696036"
+            }
+        },
+        "P999_102": {
+            "P999_102/02-FASTQ/190828_M01245_0337_000000000-J88MX/P999_102_S2_L001_R2_001.fastq.gz": {
+                "size_in_bytes": 782185615,
+                "md5_sum": "a8fe84f611034f9f6632ae8bc04503ea",
+                "last_modified": "2019-09-02 14:48:12.521706"
+            },
+            "P999_102/02-FASTQ/190828_M01245_0337_000000000-J88MX/P999_102_S2_L001_R1_001.fastq.gz": {
+                "size_in_bytes": 664948630,
+                "md5_sum": "9123f8f5e03988ca24eaa1fff5a5ea8d",
+                "last_modified": "2019-09-02 14:48:12.521706"
+            }
+        }
+    },
+    "creation_time": null,
+    "reference_genome": "Other (-, -)",
+    "application": "WG re-seq",
+    "close_date": "2019-09-14",
+    "entity_type": "project_summary",
+    "source": "lims",
+    "first_initial_qc": "2019-07-02",
+    "sequencing_finished": "2019-08-27",
+    "details": {
+        "disposal_of_any_remaining_samples": "Return on request, otherwise destruction after 1 year",
+        "custom_capture_design_id": "N/A",
+        "links": "{\"2019-06-25 14:26:34.002701\": {\"user\": \"Project Coordinatorsdaugher\", \"email\": \"Project.Coordinatorsdaugher@scilifelab.se\", \"type\": \"Other\", \"title\": \"Project folder\", \"url\": \"https://drive.google.com/drive/folders/link?usp=sharing\", \"desc\": \"\"}}",
+        "contract_received": "2019-06-18",
+        "agreement_cost": 26550.0,
+        "delivery_type": "GRUS",
+        "reference_genome": "Other (-, -)",
+        "sequence_units_ordered_(lanes)": 1.0,
+        "sample_units_ordered": 7.0,
+        "portal_id": "NGI0XXXX",
+        "project_comment": "3 bacterial DNAs to PCR-free prep (**OBS** 670bp inserts)\nPool & seq on MiSeq v3 2x300bp",
+        "plates_sent": "2019-06-16",
+        "customer_project_description": "These are pretty cool bacteria and we'd like to sequence 'em.",
+        "sample_type": "Genomic DNA",
+        "project_coordinator": "Project Coordinatorsdaugher",
+        "application": "WG re-seq",
+        "signature_queued": "LL",
+        "best_practice_bioinformatics": "No",
+        "signature_all_raw_data_delivered": "BB",
+        "contract_sent": "2019-06-18",
+        "bioinformatic_qc": "None",
+        "type": "Production",
+        "accredited_(library_preparation)": "Yes",
+        "sample_information_received": "2019-06-24",
+        "queued": "2019-07-02",
+        "running_notes": "{\"2019-07-02 16:45:20\": {\"note\": \"7/7 samples passed reception ctrl. Sample 101, 103, 104, 105, 106 &amp; 107 only enough material for one prep.\", \"category\": \"\", \"email\": \"lab.laboratoryson@scilifelab.se\", \"timestamp\": \"2019-07-02 16:45:20\", \"user\": \"Lab Laboratoryson\"}}",
+        "order_received": "2019-06-10",
+        "low_diversity": false,
+        "custom_primer": false,
+        "project_category": "Environment",
+        "sequencing_setup": "2x300",
+        "shared": "No",
+        "sequencing_platform": "MiSeq v3",
+        "customer_project_reference": "Bacteria genome sequencing nr 1",
+        "all_raw_data_delivered": "2019-09-10",
+        "library_construction_method": "DNA, Illumina TruSeq PCR-free, 670bp, -, 1291",
+        "funding_agency": "Vetenskapsr\u00e5det (VR)",
+        "accredited_(data_processing)": "Yes",
+        "all_samples_sequenced": "2019-08-31",
+        "signature_all_samples_sequenced": "BB",
+        "accredited_(data_analysis)": "N/A",
+        "invoice_reference": "XXXNO",
+        "accredited_(sequencing)": "Yes",
+        "organism": "Escherichia coli, Muribacter muris, Bibersteinia trehalosi",
+        "samples_received": "2019-03-25"
+    },
+    "samples": {
+        "P999_105": {
+            "first_initial_qc_start_date": "2019-07-02",
+            "first_prep_start_date": "2019-08-07",
+            "initial_plate_id": "27-415820",
+            "details": {
+                "total_reads_(m)": 2.658285,
+                "passed_sequencing_qc": "True",
+                "reads_min": 0.0,
+                "status_(auto)": "Finished",
+                "sample_buffer": "TE",
+                "passed_library_qc": "True",
+                "status_(manual)": "Finished",
+                "app_qc": "N/A",
+                "customer_conc": 300.0,
+                "passed_initial_qc": "True",
+                "sample_type": "Genomic DNA",
+                "progress": "Library preparation and QC validation complete",
+                "conc_method": "Nanodrop",
+                "customer_name": "193-Muribacter muris",
+                "extraction_method": "Cirlomics DNA kit",
+                "customer_volume": 30.0,
+                "customer_amount_(ug)": 9.0
+            },
+            "initial_qc": {
+                "conc_units": "ng/ul",
+                "amount_(ng)": 3584.0,
+                "initial_qc_status": "PASSED",
+                "finish_date": "2019-07-02",
+                "concentration": 128.0,
+                "start_date": "2019-07-02",
+                "volume_(ul)": 28.0,
+                "initials": "LL"
+            },
+            "library_prep": {
+                "A": {
+                    "workset_name": "WS190806DNAPCRfree",
+                    "prep_start_date": "2019-08-07",
+                    "library_validation": {
+                        "24-631994": {
+                            "conc_units": "nM",
+                            "finish_date": "2019-08-20",
+                            "well_location": "E:1",
+                            "prep_status": "PASSED",
+                            "concentration": 2.73,
+                            "average_size_bp": 790.0,
+                            "size_(bp)": 790.0,
+                            "rerun": false,
+                            "start_date": "2019-08-10",
+                            "volume_(ul)": 17.0,
+                            "initials": "LSX"
+                        }
+                    },
+                    "barcode": "ATTACTCG-AGGCGAAG",
+                    "sequenced_fc": [
+                        "190828_M01245_0337_000000000-J88MX",
+                        "190824_M01121_0354_000000000-J932Z"
+                    ],
+                    "volume_(ul)": 55.0,
+                    "sample_run_metrics": {
+                        "1_190824_000000000-J932Z_ATTACTCG-AGGCGAAG": {
+                            "sequencing_run_QC_finished": "2019-08-31",
+                            "sample_run_metrics_id": null,
+                            "dem_qc_flag": "FAILED",
+                            "seq_qc_flag": "FAILED",
+                            "sequencing_start_date": "2019-08-28",
+                            "sequencing_finish_date": "2019-08-27"
+                        },
+                        "1_190828_000000000-J88MX_ATTACTCG-AGGCGAAG": {
+                            "sequencing_run_QC_finished": "2019-08-31",
+                            "sample_run_metrics_id": null,
+                            "dem_qc_flag": "PASSED",
+                            "seq_qc_flag": "PASSED",
+                            "sequencing_start_date": "2019-08-28",
+                            "sequencing_finish_date": "2019-08-31"
+                        }
+                    },
+                    "amount_taken_(ng)": 2200.0,
+                    "reagent_label": "D701-D505 (ATTACTCG-AGGCGAAG)",
+                    "prep_status": "PASSED",
+                    "prep_finished_date": "2019-08-07",
+                    "prep_id": "151-629081",
+                    "workset_setup": "24-628920"
+                }
+            },
+            "well_location": "E:1",
+            "scilife_name": "P999_105",
+            "customer_name": "193-Muribacter muris"
+        },
+        "P999_104": {
+            "first_initial_qc_start_date": "2019-07-02",
+            "first_prep_start_date": "2019-08-07",
+            "initial_plate_id": "27-415820",
+            "details": {
+                "total_reads_(m)": 5.682848,
+                "passed_sequencing_qc": "True",
+                "sample_type": "Genomic DNA",
+                "reads_min": 0.0,
+                "status_(auto)": "Finished",
+                "sample_buffer": "TE",
+                "passed_library_qc": "True",
+                "app_qc": "N/A",
+                "customer_conc": 300.0,
+                "passed_initial_qc": "True",
+                "customer_volume": 30.0,
+                "progress": "Library preparation and QC validation complete",
+                "conc_method": "Nanodrop",
+                "customer_name": "184-Muribacter muris",
+                "extraction_method": "Cirlomics DNA kit",
+                "status_(manual)": "Finished",
+                "customer_amount_(ug)": 9.0
+            },
+            "initial_qc": {
+                "conc_units": "ng/ul",
+                "amount_(ng)": 4144.0,
+                "initial_qc_status": "PASSED",
+                "finish_date": "2019-07-02",
+                "concentration": 148.0,
+                "start_date": "2019-07-02",
+                "volume_(ul)": 28.0,
+                "initials": "LL"
+            },
+            "library_prep": {
+                "A": {
+                    "workset_name": "WS190806DNAPCRfree",
+                    "prep_start_date": "2019-08-07",
+                    "library_validation": {
+                        "24-631994": {
+                            "conc_units": "nM",
+                            "finish_date": "2019-08-20",
+                            "well_location": "D:1",
+                            "prep_status": "PASSED",
+                            "concentration": 2.827521836,
+                            "average_size_bp": 790.0,
+                            "size_(bp)": 790.0,
+                            "rerun": false,
+                            "start_date": "2019-08-10",
+                            "volume_(ul)": 17.0,
+                            "initials": "LSX"
+                        }
+                    },
+                    "barcode": "ATTACTCG-GGCTCTGA",
+                    "sequenced_fc": [
+                        "190828_M01245_0337_000000000-J88MX",
+                        "190824_M01121_0354_000000000-J932Z"
+                    ],
+                    "volume_(ul)": 55.0,
+                    "sample_run_metrics": {
+                        "1_190824_000000000-J932Z_ATTACTCG-GGCTCTGA": {
+                            "sequencing_run_QC_finished": "2019-08-31",
+                            "sample_run_metrics_id": null,
+                            "dem_qc_flag": "FAILED",
+                            "seq_qc_flag": "FAILED",
+                            "sequencing_start_date": "2019-08-28",
+                            "sequencing_finish_date": "2019-08-27"
+                        },
+                        "1_190828_000000000-J88MX_ATTACTCG-GGCTCTGA": {
+                            "sequencing_run_QC_finished": "2019-08-31",
+                            "sample_run_metrics_id": null,
+                            "dem_qc_flag": "PASSED",
+                            "seq_qc_flag": "PASSED",
+                            "sequencing_start_date": "2019-08-28",
+                            "sequencing_finish_date": "2019-08-31"
+                        }
+                    },
+                    "amount_taken_(ng)": 2200.0,
+                    "reagent_label": "D701-D504 (ATTACTCG-GGCTCTGA)",
+                    "prep_status": "PASSED",
+                    "prep_finished_date": "2019-08-07",
+                    "prep_id": "151-629081",
+                    "workset_setup": "24-628920"
+                }
+            },
+            "well_location": "D:1",
+            "scilife_name": "P999_104",
+            "customer_name": "184-Muribacter muris"
+        },
+        "P999_107": {
+            "first_initial_qc_start_date": "2019-07-02",
+            "first_prep_start_date": "2019-08-07",
+            "initial_plate_id": "27-415820",
+            "details": {
+                "total_reads_(m)": 2.452477,
+                "passed_sequencing_qc": "True",
+                "reads_min": 0.0,
+                "status_(auto)": "Finished",
+                "sample_buffer": "TE",
+                "passed_library_qc": "True",
+                "status_(manual)": "Finished",
+                "app_qc": "N/A",
+                "customer_conc": 300.0,
+                "passed_initial_qc": "True",
+                "sample_type": "Genomic DNA",
+                "progress": "Library preparation and QC validation complete",
+                "conc_method": "Nanodrop",
+                "customer_name": "S441-Bibersteinia trehalosi",
+                "extraction_method": "Cirlomics DNA kit",
+                "customer_volume": 30.0,
+                "customer_amount_(ug)": 9.0
+            },
+            "initial_qc": {
+                "conc_units": "ng/ul",
+                "amount_(ng)": 3584.0,
+                "initial_qc_status": "PASSED",
+                "finish_date": "2019-07-02",
+                "concentration": 128.0,
+                "start_date": "2019-07-02",
+                "volume_(ul)": 28.0,
+                "initials": "LL"
+            },
+            "library_prep": {
+                "A": {
+                    "workset_name": "WS190806DNAPCRfree",
+                    "prep_start_date": "2019-08-07",
+                    "library_validation": {
+                        "24-631994": {
+                            "conc_units": "nM",
+                            "finish_date": "2019-08-20",
+                            "well_location": "G:1",
+                            "prep_status": "PASSED",
+                            "concentration": 7.0,
+                            "average_size_bp": 790.0,
+                            "size_(bp)": 790.0,
+                            "rerun": false,
+                            "start_date": "2019-08-10",
+                            "volume_(ul)": 17.0,
+                            "initials": "LSX"
+                        }
+                    },
+                    "barcode": "ATTACTCG-CAGGACGT",
+                    "sequenced_fc": [
+                        "190828_M01245_0337_000000000-J88MX",
+                        "190824_M01121_0354_000000000-J932Z"
+                    ],
+                    "volume_(ul)": 55.0,
+                    "sample_run_metrics": {
+                        "1_190828_000000000-J88MX_ATTACTCG-CAGGACGT": {
+                            "sequencing_run_QC_finished": "2019-08-31",
+                            "sample_run_metrics_id": null,
+                            "dem_qc_flag": "PASSED",
+                            "seq_qc_flag": "PASSED",
+                            "sequencing_start_date": "2019-08-28",
+                            "sequencing_finish_date": "2019-08-31"
+                        },
+                        "1_190824_000000000-J932Z_ATTACTCG-CAGGACGT": {
+                            "sequencing_run_QC_finished": "2019-08-31",
+                            "sample_run_metrics_id": null,
+                            "dem_qc_flag": "FAILED",
+                            "seq_qc_flag": "FAILED",
+                            "sequencing_start_date": "2019-08-28",
+                            "sequencing_finish_date": "2019-08-27"
+                        }
+                    },
+                    "amount_taken_(ng)": 2200.0,
+                    "reagent_label": "D701-D507 (ATTACTCG-CAGGACGT)",
+                    "prep_status": "PASSED",
+                    "prep_finished_date": "2019-08-07",
+                    "prep_id": "151-629081",
+                    "workset_setup": "24-628920"
+                }
+            },
+            "well_location": "G:1",
+            "scilife_name": "P999_107",
+            "customer_name": "S441-Bibersteinia trehalosi"
+        },
+        "P999_106": {
+            "first_initial_qc_start_date": "2019-07-02",
+            "first_prep_start_date": "2019-08-07",
+            "initial_plate_id": "27-415820",
+            "details": {
+                "total_reads_(m)": 4.907448,
+                "passed_sequencing_qc": "True",
+                "sample_type": "Genomic DNA",
+                "reads_min": 0.0,
+                "status_(auto)": "Finished",
+                "sample_buffer": "TE",
+                "passed_library_qc": "True",
+                "app_qc": "N/A",
+                "customer_conc": 212.0,
+                "passed_initial_qc": "True",
+                "customer_volume": 30.0,
+                "progress": "Library preparation and QC validation complete",
+                "conc_method": "Nanodrop",
+                "customer_name": "S443-Bibersteinia trehalosi",
+                "extraction_method": "Cirlomics DNA kit",
+                "status_(manual)": "Finished",
+                "customer_amount_(ug)": 6.36
+            },
+            "initial_qc": {
+                "conc_units": "ng/ul",
+                "amount_(ng)": 3164.0,
+                "initial_qc_status": "PASSED",
+                "finish_date": "2019-07-02",
+                "concentration": 113.0,
+                "start_date": "2019-07-02",
+                "volume_(ul)": 28.0,
+                "initials": "LL"
+            },
+            "library_prep": {
+                "A": {
+                    "workset_name": "WS190806DNAPCRfree",
+                    "prep_start_date": "2019-08-07",
+                    "library_validation": {
+                        "24-631994": {
+                            "conc_units": "nM",
+                            "finish_date": "2019-08-20",
+                            "well_location": "F:1",
+                            "prep_status": "PASSED",
+                            "concentration": 2.788683006,
+                            "average_size_bp": 790.0,
+                            "size_(bp)": 790.0,
+                            "rerun": false,
+                            "start_date": "2019-08-10",
+                            "volume_(ul)": 17.0,
+                            "initials": "LSX"
+                        }
+                    },
+                    "barcode": "ATTACTCG-TAATCTTA",
+                    "sequenced_fc": [
+                        "190828_M01245_0337_000000000-J88MX",
+                        "190824_M01121_0354_000000000-J932Z"
+                    ],
+                    "volume_(ul)": 55.0,
+                    "sample_run_metrics": {
+                        "1_190828_000000000-J88MX_ATTACTCG-TAATCTTA": {
+                            "sequencing_run_QC_finished": "2019-08-31",
+                            "sample_run_metrics_id": null,
+                            "dem_qc_flag": "PASSED",
+                            "seq_qc_flag": "PASSED",
+                            "sequencing_start_date": "2019-08-28",
+                            "sequencing_finish_date": "2019-08-31"
+                        },
+                        "1_190824_000000000-J932Z_ATTACTCG-TAATCTTA": {
+                            "sequencing_run_QC_finished": "2019-08-31",
+                            "sample_run_metrics_id": null,
+                            "dem_qc_flag": "FAILED",
+                            "seq_qc_flag": "FAILED",
+                            "sequencing_start_date": "2019-08-28",
+                            "sequencing_finish_date": "2019-08-27"
+                        }
+                    },
+                    "amount_taken_(ng)": 2200.0,
+                    "reagent_label": "D701-D506 (ATTACTCG-TAATCTTA)",
+                    "prep_status": "PASSED",
+                    "prep_finished_date": "2019-08-07",
+                    "prep_id": "151-629081",
+                    "workset_setup": "24-628920"
+                }
+            },
+            "well_location": "F:1",
+            "scilife_name": "P999_106",
+            "customer_name": "S443-Bibersteinia trehalosi"
+        },
+        "P999_101": {
+            "first_initial_qc_start_date": "2019-07-02",
+            "first_prep_start_date": "2019-08-07",
+            "initial_plate_id": "27-415820",
+            "details": {
+                "total_reads_(m)": 3.627609,
+                "passed_sequencing_qc": "True",
+                "sample_type": "Genomic DNA",
+                "reads_min": 0.0,
+                "status_(auto)": "Finished",
+                "sample_buffer": "TE",
+                "passed_library_qc": "True",
+                "app_qc": "N/A",
+                "customer_conc": 300.0,
+                "passed_initial_qc": "True",
+                "customer_volume": 30.0,
+                "progress": "Library preparation and QC validation complete",
+                "conc_method": "Nanodrop",
+                "customer_name": "102-Escherichia coli",
+                "extraction_method": "Cirlomics DNA kit",
+                "status_(manual)": "Finished",
+                "customer_amount_(ug)": 9.0
+            },
+            "initial_qc": {
+                "conc_units": "ng/ul",
+                "amount_(ng)": 2480.8,
+                "initial_qc_status": "PASSED",
+                "finish_date": "2019-07-02",
+                "concentration": 88.6,
+                "start_date": "2019-07-02",
+                "volume_(ul)": 28.0,
+                "initials": "LL"
+            },
+            "library_prep": {
+                "A": {
+                    "workset_name": "WS190806DNAPCRfree",
+                    "prep_start_date": "2019-08-07",
+                    "library_validation": {
+                        "24-631994": {
+                            "conc_units": "nM",
+                            "finish_date": "2019-08-20",
+                            "well_location": "A:1",
+                            "prep_status": "PASSED",
+                            "concentration": 2.5,
+                            "average_size_bp": 790.0,
+                            "size_(bp)": 790.0,
+                            "rerun": false,
+                            "start_date": "2019-08-10",
+                            "volume_(ul)": 17.0,
+                            "initials": "LSX"
+                        }
+                    },
+                    "barcode": "ATTACTCG-TATAGCCT",
+                    "sequenced_fc": [
+                        "190828_M01245_0337_000000000-J88MX",
+                        "190824_M01121_0354_000000000-J932Z"
+                    ],
+                    "volume_(ul)": 55.0,
+                    "sample_run_metrics": {
+                        "1_190828_000000000-J88MX_ATTACTCG-TATAGCCT": {
+                            "sequencing_run_QC_finished": "2019-08-31",
+                            "sample_run_metrics_id": null,
+                            "dem_qc_flag": "PASSED",
+                            "seq_qc_flag": "PASSED",
+                            "sequencing_start_date": "2019-08-28",
+                            "sequencing_finish_date": "2019-08-31"
+                        },
+                        "1_190824_000000000-J932Z_ATTACTCG-TATAGCCT": {
+                            "sequencing_run_QC_finished": "2019-08-31",
+                            "sample_run_metrics_id": null,
+                            "dem_qc_flag": "FAILED",
+                            "seq_qc_flag": "FAILED",
+                            "sequencing_start_date": "2019-08-28",
+                            "sequencing_finish_date": "2019-08-27"
+                        }
+                    },
+                    "amount_taken_(ng)": 2200.0,
+                    "reagent_label": "D701-D501 (ATTACTCG-TATAGCCT)",
+                    "prep_status": "PASSED",
+                    "prep_finished_date": "2019-08-07",
+                    "prep_id": "151-629081",
+                    "workset_setup": "24-628920"
+                }
+            },
+            "well_location": "A:1",
+            "scilife_name": "P999_101",
+            "customer_name": "102-Escherichia coli"
+        },
+        "P999_103": {
+            "first_initial_qc_start_date": "2019-07-02",
+            "first_prep_start_date": "2019-08-07",
+            "initial_plate_id": "27-415820",
+            "details": {
+                "total_reads_(m)": 7.793645,
+                "passed_sequencing_qc": "True",
+                "sample_type": "Genomic DNA",
+                "reads_min": 0.0,
+                "status_(auto)": "Finished",
+                "sample_buffer": "TE",
+                "passed_library_qc": "False",
+                "app_qc": "N/A",
+                "customer_conc": 300.0,
+                "passed_initial_qc": "True",
+                "customer_volume": 30.0,
+                "progress": "Library preparation and QC validation complete",
+                "conc_method": "Nanodrop",
+                "customer_name": "109-Muribacter muris",
+                "extraction_method": "Cirlomics DNA kit",
+                "status_(manual)": "Finished",
+                "customer_amount_(ug)": 9.0
+            },
+            "initial_qc": {
+                "conc_units": "ng/ul",
+                "amount_(ng)": 3192.0,
+                "initial_qc_status": "PASSED",
+                "finish_date": "2019-07-02",
+                "concentration": 114.0,
+                "start_date": "2019-07-02",
+                "volume_(ul)": 28.0,
+                "initials": "LL"
+            },
+            "library_prep": {
+                "A": {
+                    "workset_name": "WS190806DNAPCRfree",
+                    "prep_start_date": "2019-08-07",
+                    "library_validation": {
+                        "24-631994": {
+                            "conc_units": "nM",
+                            "finish_date": "2019-08-20",
+                            "average_size_bp": 790.0,
+                            "failure_reason": "Requirements",
+                            "size_(bp)": 790.0,
+                            "rerun": false,
+                            "prep_status": "FAILED",
+                            "concentration": 1.189196887,
+                            "well_location": "C:1",
+                            "start_date": "2019-08-10",
+                            "volume_(ul)": 17.0,
+                            "initials": "LSX"
+                        }
+                    },
+                    "barcode": "ATTACTCG-CCTATCCT",
+                    "sequenced_fc": [
+                        "190828_M01245_0337_000000000-J88MX",
+                        "190824_M01121_0354_000000000-J932Z"
+                    ],
+                    "volume_(ul)": 55.0,
+                    "sample_run_metrics": {
+                        "1_190828_000000000-J88MX_ATTACTCG-CCTATCCT": {
+                            "sequencing_run_QC_finished": "2019-08-31",
+                            "sample_run_metrics_id": null,
+                            "dem_qc_flag": "PASSED",
+                            "seq_qc_flag": "PASSED",
+                            "sequencing_start_date": "2019-08-28",
+                            "sequencing_finish_date": "2019-08-31"
+                        },
+                        "1_190824_000000000-J932Z_ATTACTCG-CCTATCCT": {
+                            "sequencing_run_QC_finished": "2019-08-31",
+                            "sample_run_metrics_id": null,
+                            "dem_qc_flag": "FAILED",
+                            "seq_qc_flag": "FAILED",
+                            "sequencing_start_date": "2019-08-28",
+                            "sequencing_finish_date": "2019-08-27"
+                        }
+                    },
+                    "amount_taken_(ng)": 2200.0,
+                    "reagent_label": "D701-D503 (ATTACTCG-CCTATCCT)",
+                    "prep_status": "FAILED",
+                    "prep_finished_date": "2019-08-07",
+                    "prep_id": "151-629081",
+                    "workset_setup": "24-628920"
+                }
+            },
+            "well_location": "C:1",
+            "scilife_name": "P999_103",
+            "customer_name": "109-Muribacter muris"
+        },
+        "P999_102": {
+            "first_initial_qc_start_date": "2019-07-02",
+            "first_prep_start_date": "2019-08-07",
+            "initial_plate_id": "27-415820",
+            "details": {
+                "total_reads_(m)": 2.992908,
+                "passed_sequencing_qc": "True",
+                "reads_min": 0.0,
+                "customer_volume": 30.0,
+                "sample_buffer": "TE",
+                "passed_library_qc": "True",
+                "status_(manual)": "Finished",
+                "app_qc": "N/A",
+                "customer_conc": 292.0,
+                "passed_initial_qc": "True",
+                "sample_type": "Genomic DNA",
+                "progress": "Library preparation and QC validation complete",
+                "conc_method": "Nanodrop",
+                "customer_name": "116-Escherichia coli",
+                "extraction_method": "Cirlomics DNA kit",
+                "status_(auto)": "Finished",
+                "customer_amount_(ug)": 8.76
+            },
+            "initial_qc": {
+                "conc_units": "ng/ul",
+                "amount_(ng)": 6160.0,
+                "initial_qc_status": "PASSED",
+                "finish_date": "2019-07-02",
+                "concentration": 220.0,
+                "start_date": "2019-07-02",
+                "volume_(ul)": 28.0,
+                "initials": "LL"
+            },
+            "library_prep": {
+                "A": {
+                    "workset_name": "WS190806DNAPCRfree",
+                    "prep_start_date": "2019-08-07",
+                    "library_validation": {
+                        "24-631994": {
+                            "conc_units": "nM",
+                            "finish_date": "2019-08-20",
+                            "well_location": "B:1",
+                            "prep_status": "PASSED",
+                            "concentration": 7.83,
+                            "average_size_bp": 790.0,
+                            "size_(bp)": 790.0,
+                            "rerun": false,
+                            "start_date": "2019-08-10",
+                            "volume_(ul)": 17.0,
+                            "initials": "LSX"
+                        }
+                    },
+                    "barcode": "ATTACTCG-ATAGAGGC",
+                    "sequenced_fc": [
+                        "190828_M01245_0337_000000000-J88MX",
+                        "190824_M01121_0354_000000000-J932Z"
+                    ],
+                    "volume_(ul)": 55.0,
+                    "sample_run_metrics": {
+                        "1_190824_000000000-J932Z_ATTACTCG-ATAGAGGC": {
+                            "sequencing_run_QC_finished": "2019-08-31",
+                            "sample_run_metrics_id": null,
+                            "dem_qc_flag": "FAILED",
+                            "seq_qc_flag": "FAILED",
+                            "sequencing_start_date": "2019-08-28",
+                            "sequencing_finish_date": "2019-08-27"
+                        },
+                        "1_190828_000000000-J88MX_ATTACTCG-ATAGAGGC": {
+                            "sequencing_run_QC_finished": "2019-08-31",
+                            "sample_run_metrics_id": null,
+                            "dem_qc_flag": "PASSED",
+                            "seq_qc_flag": "PASSED",
+                            "sequencing_start_date": "2019-08-28",
+                            "sequencing_finish_date": "2019-08-31"
+                        }
+                    },
+                    "amount_taken_(ng)": 2200.0,
+                    "reagent_label": "D701-D502 (ATTACTCG-ATAGAGGC)",
+                    "prep_status": "PASSED",
+                    "prep_finished_date": "2019-08-07",
+                    "prep_id": "151-629081",
+                    "workset_setup": "24-628920"
+                }
+            },
+            "well_location": "B:1",
+            "scilife_name": "P999_102",
+            "customer_name": "116-Escherichia coli"
+        }
+    },
+    "open_date": "2019-06-25",
+    "project_id": "P999",
+    "no_of_samples": 7,
+    "delivery_type": "GRUS",
+    "project_name": "P.Projectsson_19_02",
+    "order_details": {
+        "title": "Bacteria genome sequencing nr 1",
+        "fields": {
+            "bx_data_delivery": "Delivery resource by SNIC-UPPMAX (GRUS)",
+            "bx_exp": "Have bioinformatics expertise internally",
+            "seq_instrument": "Do not know",
+            "project_desc": "These are pretty cool bacteria and we'd like to sequence 'em.",
+            "seq_readlength_hiseqx": null,
+            "sample_no": 7,
+            "project_lab_email": "Project.Projectsson@su.se",
+            "project_bx_email": "project.assistant.deputy@su.se",
+            "bx_bp": "No",
+            "library_readymade": null,
+            "bioinformatics": null,
+            "sequencing": null,
+            "project_pi_email": "Project.Projectsson@su.se",
+            "project_pi_name": "Project Projectsson",
+            "project_lab_name": "Project Projectsson"
+        },
+        "created": "2019-06-10T12:58:49.808Z",
+        "site": "NGI Sweden Order Portal",
+        "modified": "2019-09-15T01:30:45.994Z",
+        "owner": {
+            "name": "Projectsson, Project",
+            "email": "Project.Projectsson@slu.se"
+        },
+        "identifier": "NGI094XX"
+    },
+    "modification_time": "2020-03-21T02:45:51.105985",
+    "affiliation": "SU-Stockholm",
+    "contact": "Project.Projectsson@slu.se"
+}
