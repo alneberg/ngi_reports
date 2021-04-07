@@ -142,12 +142,12 @@ class Project:
         self.skip_fastq = False
         self.user_ID = ''
 
-    def populate(self, log, organism_names, **kwargs):
+    def populate(self, log, organism_names, project, **kwargs):
 
-        project = kwargs.get('project', '')
         if not project:
             log.error('A project must be provided, so not proceeding.')
             sys.exit('A project was not provided, stopping execution...')
+
         self.skip_fastq = kwargs.get('skip_fastq')
         self.cluster = kwargs.get('cluster')
 
@@ -166,6 +166,7 @@ class Project:
             log.error('No such project name/id "{}", check if provided information is right'.format(project))
             sys.exit('Project not found in statusdb, stopping execution...')
         self.ngi_name = proj.get('project_name')
+        log.info("{} was fetched from statusdb".format(self.ngi_name))
 
         if proj.get('source') != 'lims':
             log.error('The source for data for project {} is not LIMS.'.format(project))

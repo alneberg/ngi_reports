@@ -9,6 +9,7 @@ import argparse
 import jinja2
 import json
 import os
+import sys
 import markdown
 
 from ngi_reports import __version__
@@ -45,8 +46,13 @@ def make_reports(report_type, working_dir=os.getcwd(), config_file=None, **kwarg
     # Import the modules for this report type
     report_mod = __import__('ngi_reports.reports.{}'.format(report_type), fromlist=['ngi_reports.reports'])
 
+    project_id_or_name = kwargs.get('project')
+    if not project_id_or_name:
+        LOG.error('A project must be provided, so not proceeding.')
+        sys.exit('A project was not provided, stopping execution...')
+
     proj = Project()
-    proj.populate(LOG, config._sections['organism_names'], **kwargs)
+    proj.populate(LOG, config._sections['organism_names'], project_id_or_name, **kwargs)
 
     # Make the report object
     report = report_mod.Report(LOG, working_dir, **kwargs)
@@ -154,7 +160,7 @@ def main():
     parser.add_argument("-d", "--dir", dest="working_dir", default=os.getcwd(),
         help="Working Directory. Default: cwd when script is executed.")
     parser.add_argument('-c', '--config_file', default=None, action="store", help="Configuration file to use instead of default (~/.ngi_config/ngi_reports.conf)")
-    parser.add_argument('-p', '--project', default=None, action="store", help="Project name to generate report")
+    parser.add_argument('-p', '--project', default=None, action="store", help="Project name to generate report", required=True)
     parser.add_argument('-s', '--signature', default=None, action="store", help="Signature/Name for person who generates 'project_summary' report")
     parser.add_argument('-u', '--uppmax_id', default=None, action="store", help="Given UPPMAX id will be used while generating report")
     parser.add_argument('-q', '--quality', default=None, action="store", type=int, help="Q30 threshold for samples to set status")
