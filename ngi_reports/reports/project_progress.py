@@ -52,7 +52,11 @@ class Report(ngi_reports.reports.BaseReport):
             if sample.initial_qc_status == 'PASSED':
                 self.meta['RC_passed'] += 1
 
-        self.meta['RC_progress_width'] = round(100 * self.meta['RC_passed'] / float(self.meta['nr_samples']))
+        if self.meta['nr_samples'] != 0:
+            self.meta['RC_progress_width'] = round(100 * self.meta['RC_passed'] / float(self.meta['nr_samples']))
+        else:
+            self.meta['RC_progress_width'] = 0
+
         if self.meta['RC_progress_width'] == 100:
             self.meta['RC_progress_class'] = 'bg-success'
         else:
@@ -61,7 +65,11 @@ class Report(ngi_reports.reports.BaseReport):
         # Make the file basename
         output_bn = os.path.realpath(os.path.join(self.working_dir, self.report_dir, self.report_fn))
 
-        # Parse the template
-        html = template.render(project=self.project,
-                               meta=self.meta)
+        # Parse and render the template
+        html = self._render_template(template, self.project, self.meta)
+
         return output_bn, html
+
+    def _render_template(template, project, meta):
+        """Convenience function to simplify mocking in tests"""
+        return template.render(project=project, meta=meta)
