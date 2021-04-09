@@ -7,7 +7,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-        STATUS_DB_CONFIG: $GITHUB_WORKSPACE/test/dummy_statusdb.yaml
+        STATUS_DB_CONFIG: ${{ env.GITHUB_WORKSPACE }}/test/dummy_statusdb.yaml
     strategy:
       matrix:
         python-version: [3.5, 3.8]
