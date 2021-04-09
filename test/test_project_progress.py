@@ -44,10 +44,11 @@ def mock_statusdb_flowcell():
 
 
 class TestProjectProgress(unittest.TestCase):
+    @mock.patch('ngi_reports.utils.entities.statusdb.couchdb.Server')
     @mock.patch('ngi_reports.utils.entities.statusdb.statusdb_connection.get_project_flowcell')
     @mock.patch('ngi_reports.utils.entities.statusdb.statusdb_connection.get_entry')
     @mock.patch('ngi_reports.reports.project_progress.Report._render_template')
-    def test_basic(self, mock_renderer, get_entry, get_project_fc):
+    def test_basic(self, mock_renderer, get_entry, get_project_fc, mock_server):
         LOG = mock.Mock()
         get_entry.side_effect = mock_statusdb_get_entry
         get_project_fc.return_value = mock_statusdb_flowcell()
@@ -59,10 +60,11 @@ class TestProjectProgress(unittest.TestCase):
         report.generate_report(small_test_project, None, 'name@example.com')
         assert mock_renderer.called
 
+    @mock.patch('ngi_reports.utils.entities.statusdb.couchdb.Server')
     @mock.patch('ngi_reports.utils.entities.statusdb.statusdb_connection.get_project_flowcell')
     @mock.patch('ngi_reports.utils.entities.statusdb.statusdb_connection.get_entry')
     @mock.patch('ngi_reports.reports.project_progress.Report._render_template')
-    def test_missing_project(self, mock_renderer, get_entry, get_project_fc):
+    def test_missing_project(self, mock_renderer, get_entry, get_project_fc, mock_server):
         LOG = mock.Mock()
         get_entry.side_effect = mock_statusdb_get_entry
         get_project_fc.return_value = mock_statusdb_flowcell()
