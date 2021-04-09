@@ -5,6 +5,8 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+        STATUS_DB_CONFIG: ${GITHUB_WORKSPACE}/test/dummy_statusdb.yaml
     strategy:
       matrix:
         python-version: [3.5, 3.8]
@@ -19,8 +21,11 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         python setup.py install
+    - name: Echo variables
+      run: |
+        echo "Home: ${HOME}"
+        echo "STATUS_DB_CONFIG: ${STATUS_DB_CONFIG}"
+        echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
     - name: Test with unittest
-      env:
-          STATUS_DB_CONFIG: env.GITHUB_WORKSPACE/test/dummy_statusdb.yaml
       run: |
         cd test; python -m unittest test_project_progress.py
