@@ -21,6 +21,6 @@ jobs:
         python setup.py install
     - name: Test with unittest
       env:
-          STATUS_DB_CONFIG: ${{GITHUB_WORKSPACE}}/test/dummy_statusdb.yaml
+          STATUS_DB_CONFIG: env.GITHUB_WORKSPACE/test/dummy_statusdb.yaml
       run: |
         cd test; python -m unittest test_project_progress.py
