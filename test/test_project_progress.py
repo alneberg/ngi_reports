@@ -9,6 +9,7 @@ from ngi_reports.log import loggers
 
 LOG = loggers.minimal_logger('NGI Reports')
 
+
 def mock_statusdb_get_entry(key, use_id_view=False):
     """Mock values for documents from statusdb
 
@@ -29,6 +30,7 @@ def mock_statusdb_get_entry(key, use_id_view=False):
     with open(os.path.join('data/statusdb/', json_file)) as data:
         return json.loads(data.read())
 
+
 def mock_statusdb_flowcell():
     project_flowcells = {}
 
@@ -36,13 +38,12 @@ def mock_statusdb_flowcell():
         with open(os.path.join('data/statusdb/', flowcell_file)) as flowcell_data:
             fc = json.loads(flowcell_data.read())
             fc_date, fc_name = fc['name'].split('_')
-            project_flowcells[fc_name] = {'name':fc_name, 'run_name':fc['name'], 'date':fc_date, 'db': 'x_flowcells'}
+            project_flowcells[fc_name] = {'name': fc_name, 'run_name': fc['name'], 'date': fc_date, 'db': 'x_flowcells'}
 
     return project_flowcells
 
 
 class TestProjectProgress(unittest.TestCase):
-
     @mock.patch('ngi_reports.utils.entities.statusdb.statusdb_connection.get_project_flowcell')
     @mock.patch('ngi_reports.utils.entities.statusdb.statusdb_connection.get_entry')
     @mock.patch('ngi_reports.reports.project_progress.Report._render_template')
