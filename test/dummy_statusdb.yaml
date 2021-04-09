@@ -1,0 +1,5 @@
+statusdb:
+    url: example.com
+    username: made.up
+    password: wontbeused
+    port: 5983
