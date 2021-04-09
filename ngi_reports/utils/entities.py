@@ -203,7 +203,7 @@ class Project:
             self.cluster = 'grus'
 
         self.best_practice          = False if proj_details.get('best_practice_bioinformatics','No') == 'No' else True
-        self.library_construction   = self.get_library_method(self.ngi_name, self.application, proj_details['library_construction_method'])
+        self.library_construction   = self.get_library_method(self.ngi_name, self.application, proj_details['library_construction_method'], log=log)
         self.is_finished_lib        = True if 'by user' in self.library_construction.lower() else False
 
         for key in self.accredited:
@@ -486,7 +486,7 @@ class Project:
 
 
 
-    def get_library_method(self, project_name, application, library_construction_method):
+    def get_library_method(self, project_name, application, library_construction_method, log=None):
         """Get the library construction method and return as formatted string
         """
         if application == 'Finished library':
