@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.5, 3.8]
+        python-version: [3.8]
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -21,8 +21,6 @@ jobs:
         python setup.py install
     - name: Test with unittest
       env:
-        STATUS_DB_CONFIG: $GITHUB_WORKSPACE/test/dummy_statusdb.yaml
+        STATUS_DB_CONFIG: ${{github.workspace}}/test/dummy_statusdb.yaml
       run: |
-        echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-        echo "STATUS_DB_CONFIG: $STATUS_DB_CONFIG"
         cd test; python -m unittest test_project_progress.py
