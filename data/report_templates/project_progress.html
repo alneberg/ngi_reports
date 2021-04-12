@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="generator" content="Markdown">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,{{ include_file('data/report_templates/project_progress_assets/img/NGI-square-icon.png', b64=True) }}"/>
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,{{ include_file('project_progress_assets/img/NGI-square-icon.png', b64=True) }}"/>
   <title>{% if meta.subtitle %} {{ meta.subtitle }} - {% endif %} {% if meta.title %}{{ meta.title }}{% endif %}</title>
 
   <!-- Bootstrap CSS -->
   <style type="text/css">
-    {{ include_file('data/report_templates/project_progress_assets/css/bootstrap.min.css') }}
+    {{ include_file('project_progress_assets/css/bootstrap.min.css') }}
   </style>
 
   <style type="text/css">
@@ -97,8 +97,8 @@
   <div class="container">
     <div class="page_header mt-5">
       <div class="d-flex flex-row">
-        <a class="me-auto" href="http://www.scilifelab.se" target="_blank"><img title="Science for Life Laboratory" src="data:image/png;base64, {{ include_file('data/report_templates/project_progress_assets/img/scilifelab.png', b64=True) }}"></a>
-        <a class="" href="https://ngisweden.scilifelab.se/" target="_blank"><img title="National Genomics Infrastructure" src="data:image/png;base64, {{ include_file('data/report_templates/project_progress_assets/img/NGI.png', b64=True) }}"></a>
+        <a class="me-auto" href="http://www.scilifelab.se" target="_blank"><img title="Science for Life Laboratory" src="data:image/png;base64, {{ include_file('project_progress_assets/img/scilifelab.png', b64=True) }}"></a>
+        <a class="" href="https://ngisweden.scilifelab.se/" target="_blank"><img title="National Genomics Infrastructure" src="data:image/png;base64, {{ include_file('project_progress_assets/img/NGI.png', b64=True) }}"></a>
       </div>
       National Genomics Infrastructure - Project Progress
     </div>
@@ -376,8 +376,8 @@
       </div>
     </footer>
   </div>
-  <script> {{ include_file('data/report_templates/project_progress_assets/js/bootstrap.bundle.min.js') }}</script>
-  <script> {{ include_file('data/report_templates/project_progress_assets/js/jquery-3.6.0.min.js') }}</script>
+  <script> {{ include_file('project_progress_assets/js/bootstrap.bundle.min.js') }}</script>
+  <script> {{ include_file('project_progress_assets/js/jquery-3.6.0.min.js') }}</script>
 
   <script>
   $(document).ready(
