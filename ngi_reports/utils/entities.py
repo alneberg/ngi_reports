@@ -204,7 +204,10 @@ class Project:
 
         self.best_practice          = False if proj_details.get('best_practice_bioinformatics','No') == 'No' else True
         self.library_construction   = self.get_library_method(self.ngi_name, self.application, proj_details['library_construction_method'], log=log)
-        self.is_finished_lib        = True if 'by user' in self.library_construction.lower() else False
+        if self.library_construction is None:
+            self.is_finished_lib = None
+        else:
+            self.is_finished_lib = True if 'by user' in self.library_construction.lower() else False
 
         for key in self.accredited:
             self.accredited[key] = proj_details.get('accredited_({})'.format(key))
