@@ -70,6 +70,6 @@ class Report(ngi_reports.reports.BaseReport):
 
         return output_bn, html
 
-    def _render_template(template, project, meta):
+    def _render_template(self, template, project, meta):
         """Convenience function to simplify mocking in tests"""
         return template.render(project=project, meta=meta)
