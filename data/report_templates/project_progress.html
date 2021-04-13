@@ -42,7 +42,7 @@
     margin-bottom:15px;
     padding-bottom:15px;
   }
-  h1.title, h1.subtitle {
+  h1.title, h1.subtitle, h1.aborted{
     font-weight: normal;
     text-align: center;
     margin:0;
@@ -107,6 +107,7 @@
     <header>
       {% if meta.title %}<h1 class="title">{{ meta.title }}</h1>{% endif %}
       {% if meta.subtitle %}<h1 class="subtitle">{{ meta.subtitle }}</h1>{% endif %}
+      {% if project.aborted %}<h1 class="aborted text-danger">Aborted</h1>{% endif %}
       {% if meta.date %}<h3 class="date">{{ meta.date }}</h3>{% endif %}
     </header>
 

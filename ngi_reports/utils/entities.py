@@ -108,6 +108,7 @@ class Project:
         self.aborted_samples = OrderedDict()
         self.samples = OrderedDict()
         self.flowcells = {}
+        self.aborted = False
         self.accredited = { 'library_preparation': 'N/A',
                             'data_processing': 'N/A',
                             'sequencing': 'N/A',
@@ -172,11 +173,12 @@ class Project:
             log.error('The source for data for project {} is not LIMS.'.format(project))
             raise BaseException
 
-        proj_details = proj.get('details',{})
+        proj_details = proj.get('details', {})
 
         continue_aborted_project = kwargs.get('continue_aborted_project')
         if 'aborted' in proj_details:
             log.warn('Project {} was aborted, so not proceeding.'.format(project))
+            self.aborted = True
             if not continue_aborted_project:
                 sys.exit('Project {} was aborted, stopping execution...'.format(project))
 
