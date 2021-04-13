@@ -10,22 +10,11 @@ from ngi_reports.log import loggers
 LOG = loggers.minimal_logger('NGI Reports')
 
 
-def mock_statusdb_get_project_no_samples(key, use_id_view=False):
-    """Mock project without samples from statusdb
-
-    """
-    json_data = mock_statusdb_get_entry(key, use_id_view=use_id_view)
-
-    if key == 'P999':
-        json_data.pop('samples')
-
-    return json_data
-
 def mock_statusdb_get_entry(key, use_id_view=False):
-    """Mock values for documents from statusdb
+    '''Mock values for documents from statusdb
 
     returns json files from the directory 'tests/data/statusdb/'
-    """
+    '''
     json_file = None
     if key == '190828_000000000-J88MX':
         json_file = 'miseq_flowcell_1.json'
@@ -40,6 +29,43 @@ def mock_statusdb_get_entry(key, use_id_view=False):
 
     with open(os.path.join('data/statusdb/', json_file)) as data:
         return json.loads(data.read())
+
+
+def mock_statusdb_get_aborted_project(key, use_id_view=False):
+    '''Mock aborted project from statusdb
+
+    '''
+    json_data = mock_statusdb_get_entry(key, use_id_view=use_id_view)
+
+    if key == 'P999':
+        json_data['details']['aborted'] = '2020-01-01'
+
+    return json_data
+
+
+def mock_statusdb_get_project_no_samples(key, use_id_view=False):
+    '''Mock project without samples from statusdb
+
+    '''
+    json_data = mock_statusdb_get_entry(key, use_id_view=use_id_view)
+
+    if key == 'P999':
+        json_data.pop('samples')
+
+    return json_data
+
+
+def mock_statusdb_get_project_aborted_samples(key, use_id_view=False):
+    '''Mock project with aborted samples
+
+    '''
+    json_data = mock_statusdb_get_entry(key, use_id_view=use_id_view)
+
+    if key == 'P999':
+        json_data['samples']['P999_105']['details']['status_(auto)'] = 'In Progress'
+        json_data['samples']['P999_105']['details']['status_(manual)'] = 'Aborted'
+
+    return json_data
 
 
 def mock_statusdb_flowcell():
@@ -83,11 +109,39 @@ class TestProjectProgress(unittest.TestCase):
         with self.assertRaises(SystemExit):
             small_test_project.populate(LOG, {}, "P998", exclude_fc=[])
 
+    def test_aborted_project(self, mock_renderer, get_entry, get_project_fc, mock_server):
+        '''Asserts the report generation goes through to the rendering without exceptions
+        even though the project was aborted.'''
+        LOG = mock.Mock()
+        get_entry.side_effect = mock_statusdb_get_aborted_project
+        get_project_fc.return_value = mock_statusdb_flowcell()
+        report = Report(LOG, os.getcwd())
+
+        small_test_project = Project()
+        small_test_project.populate(LOG, {}, "P999", exclude_fc=[], continue_aborted_project=True)
+
+        report.generate_report(small_test_project, None, 'name@example.com')
+        assert mock_renderer.called
+
     def test_no_samples(self, mock_renderer, get_entry, get_project_fc, mock_server):
         '''Asserts the report generation goes through to the rendering without exceptions
         even though no samples exists'''
         LOG = mock.Mock()
         get_entry.side_effect = mock_statusdb_get_project_no_samples
+        get_project_fc.return_value = mock_statusdb_flowcell()
+        report = Report(LOG, os.getcwd())
+
+        small_test_project = Project()
+        small_test_project.populate(LOG, {}, "P999", exclude_fc=[])
+
+        report.generate_report(small_test_project, None, 'name@example.com')
+        assert mock_renderer.called
+
+    def test_aborted_samples(self, mock_renderer, get_entry, get_project_fc, mock_server):
+        '''Asserts the report generation goes through to the rendering without exceptions
+        even though some samples are aborted'''
+        LOG = mock.Mock()
+        get_entry.side_effect = mock_statusdb_get_project_aborted_samples
         get_project_fc.return_value = mock_statusdb_flowcell()
         report = Report(LOG, os.getcwd())
 
