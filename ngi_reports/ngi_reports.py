@@ -36,6 +36,18 @@ def available_template_files():
 ALLOWED_REPORT_TYPES = remove_duplicates([fl.replace(".md", "").replace(".html", "") for fl in available_template_files()])
 
 
+def jinja_env(LOG, reports_dir):
+    try:
+        env = jinja2.Environment(loader=jinja2.FileSystemLoader(reports_dir))
+    except Exception:
+        LOG.error('Could not load the Jinja environment')
+        raise
+    file_includer = FileIncluder(reports_dir)
+    env.globals['include_file'] = file_includer.include_file
+
+    return env
+
+
 def make_reports(report_type, working_dir=os.getcwd(), config_file=None, **kwargs):
 
     LOG.info('Report type: {}'.format(report_type))
@@ -64,13 +76,7 @@ def make_reports(report_type, working_dir=os.getcwd(), config_file=None, **kwarg
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    try:
-        env = jinja2.Environment(loader=jinja2.FileSystemLoader(reports_dir))
-    except Exception:
-        LOG.error('Could not load the Jinja environment')
-        raise
-    file_includer = FileIncluder(reports_dir)
-    env.globals['include_file'] = file_includer.include_file
+    env = jinja_env(LOG, reports_dir)
 
     if report_type == 'project_summary':
         proj.populate(LOG, config._sections['organism_names'], project_id_or_name, **kwargs)
