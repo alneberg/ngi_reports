@@ -52,7 +52,6 @@ def make_reports(report_type, working_dir=os.getcwd(), config_file=None, **kwarg
         sys.exit('A project was not provided, stopping execution...')
 
     proj = Project()
-    proj.populate(LOG, config._sections['organism_names'], project_id_or_name, **kwargs)
 
     # Make the report object
     report = report_mod.Report(LOG, working_dir, **kwargs)
@@ -74,6 +73,8 @@ def make_reports(report_type, working_dir=os.getcwd(), config_file=None, **kwarg
     env.globals['include_file'] = file_includer.include_file
 
     if report_type == 'project_summary':
+        proj.populate(LOG, config._sections['organism_names'], project_id_or_name, **kwargs)
+
         # Print the markdown output file
         # Load the Jinja2 template
         try:
@@ -111,7 +112,9 @@ def make_reports(report_type, working_dir=os.getcwd(), config_file=None, **kwarg
 
         # Change back to previous working dir
         os.chdir(old_cwd)
-    else:
+    elif report_type == 'project_progress':
+        # Populate the project, allowing for aborted projects
+        proj.populate(LOG, config._sections['organism_names'], project_id_or_name, continue_aborted_project=True, **kwargs)
         template = env.get_template('{}.html'.format(report_type))
         output_bn, html = report.generate_report(proj, template, config.get('ngi_reports', 'support_email'))
         out_path = os.path.realpath(os.path.join(os.getcwd(), 'project_progress.html'))
