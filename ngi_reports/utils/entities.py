@@ -174,9 +174,11 @@ class Project:
 
         proj_details = proj.get('details',{})
 
+        continue_aborted_project = kwargs.get('continue_aborted_project')
         if 'aborted' in proj_details:
             log.warn('Project {} was aborted, so not proceeding.'.format(project))
-            sys.exit('Project {} was aborted, stopping execution...'.format(project))
+            if not continue_aborted_project:
+                sys.exit('Project {} was aborted, stopping execution...'.format(project))
 
         if not id_view:
             self.ngi_id = proj.get('project_id')
