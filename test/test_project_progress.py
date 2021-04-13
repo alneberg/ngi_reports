@@ -6,6 +6,7 @@ import json
 from ngi_reports.reports.project_progress import Report
 from ngi_reports.utils.entities import Project
 from ngi_reports.log import loggers
+from ngi_reports.ngi_reports import jinja_env
 
 LOG = loggers.minimal_logger('NGI Reports')
 
@@ -85,7 +86,7 @@ def mock_statusdb_flowcell():
 @mock.patch('ngi_reports.utils.entities.statusdb.statusdb_connection.get_entry')
 @mock.patch('ngi_reports.reports.project_progress.Report._render_template')
 class TestProjectProgress(unittest.TestCase):
-
+    '''Test class for tests where no html rendering is actually done'''
     def test_basic(self, mock_renderer, get_entry, get_project_fc, mock_server):
         '''Asserts the report generation goes through to the rendering without exceptions'''
         LOG = mock.Mock()
@@ -150,3 +151,44 @@ class TestProjectProgress(unittest.TestCase):
 
         report.generate_report(small_test_project, None, 'name@example.com')
         assert mock_renderer.called
+
+@mock.patch('ngi_reports.utils.entities.statusdb.couchdb.Server')
+@mock.patch('ngi_reports.utils.entities.statusdb.statusdb_connection.get_project_flowcell')
+@mock.patch('ngi_reports.utils.entities.statusdb.statusdb_connection.get_entry')
+class TestProjectProgressHtml(unittest.TestCase):
+    '''Test class for tests where content of the html file is checked.'''
+
+    def test_regular_project(self, get_entry, get_project_fc, mock_server):
+        '''Asserts the report generation goes through to the rendering without exceptions
+        even though the project was aborted.'''
+        LOG = mock.Mock()
+        env = jinja_env(LOG, os.path.join(os.getcwd(), '..', 'data', 'report_templates'))
+        template = env.get_template('{}.html'.format('project_progress'))
+        get_entry.side_effect = mock_statusdb_get_entry
+        get_project_fc.return_value = mock_statusdb_flowcell()
+        report = Report(LOG, os.getcwd())
+
+        small_test_project = Project()
+        small_test_project.populate(LOG, {}, "P999", exclude_fc=[], continue_aborted_project=True)
+
+        _, html = report.generate_report(small_test_project, template, 'name@example.com')
+
+        # To make the aborted project test more valid
+        self.assertFalse('Aborted' in html)
+
+    def test_aborted_project(self, get_entry, get_project_fc, mock_server):
+        '''Asserts the report generation goes through to the rendering without exceptions
+        even though the project was aborted.'''
+        LOG = mock.Mock()
+        env = jinja_env(LOG, os.path.join(os.getcwd(), '..', 'data', 'report_templates'))
+        template = env.get_template('{}.html'.format('project_progress'))
+        get_entry.side_effect = mock_statusdb_get_aborted_project
+        get_project_fc.return_value = mock_statusdb_flowcell()
+        report = Report(LOG, os.getcwd())
+
+        small_test_project = Project()
+        small_test_project.populate(LOG, {}, "P999", exclude_fc=[], continue_aborted_project=True)
+
+        _, html = report.generate_report(small_test_project, template, 'name@example.com')
+
+        self.assertTrue('Aborted' in html)
