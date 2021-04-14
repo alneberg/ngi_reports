@@ -11,6 +11,7 @@ import json
 import os
 import sys
 import markdown
+import pkg_resources
 
 from ngi_reports import __version__
 from ngi_reports.log import loggers
@@ -27,7 +28,7 @@ def remove_duplicates(input_list):
 
 
 def available_template_files():
-    template_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, 'data', 'report_templates'))
+    template_dir = pkg_resources.resource_filename(__name__, "report_templates")
     return os.listdir(template_dir) + ['ign_aggregate_report']
 
 
@@ -70,7 +71,7 @@ def make_reports(report_type, working_dir=os.getcwd(), config_file=None, **kwarg
 
     # Work out all of the directory names
     output_dir = os.path.realpath(os.path.join(working_dir, report.report_dir))
-    reports_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, 'data', 'report_templates'))
+    reports_dir = pkg_resources.resource_filename(__name__, "report_templates")
 
     # Create the directory if we don't already have it
     if not os.path.exists(output_dir):
@@ -132,7 +133,7 @@ def make_reports(report_type, working_dir=os.getcwd(), config_file=None, **kwarg
 def markdown_to_html(report_type, jinja2_env=None, markdown_text=None, markdown_path=None, reports_dir=None, out_path=None):
     #get path to template dir
     if not reports_dir:
-        reports_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, 'data', 'report_templates'))
+        reports_dir = reports_dir = pkg_resources.resource_filename(__name__, "report_templates")
     #get swedac text to add to report
     with open(reports_dir+'/swedac.html', 'r') as f:
         swedac_text = f.read()
