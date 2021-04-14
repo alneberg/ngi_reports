@@ -159,8 +159,7 @@ class TestProjectProgressHtml(unittest.TestCase):
     '''Test class for tests where content of the html file is checked.'''
 
     def test_regular_project(self, get_entry, get_project_fc, mock_server):
-        '''Asserts the report generation goes through to the rendering without exceptions
-        even though the project was aborted.'''
+        '''Asserts the report generation renders without exceptions'''
         LOG = mock.Mock()
         env = jinja_env(LOG, os.path.join(os.getcwd(), '..', 'data', 'report_templates'))
         template = env.get_template('{}.html'.format('project_progress'))
@@ -175,10 +174,12 @@ class TestProjectProgressHtml(unittest.TestCase):
 
         # To make the aborted project test more valid
         self.assertFalse('Aborted' in html)
+        self.assertTrue('7/7' in html)
 
     def test_aborted_project(self, get_entry, get_project_fc, mock_server):
-        '''Asserts the report generation goes through to the rendering without exceptions
-        even though the project was aborted.'''
+        '''Asserts the report renders without exceptions and includes Aborted
+
+        when the project was aborted.'''
         LOG = mock.Mock()
         env = jinja_env(LOG, os.path.join(os.getcwd(), '..', 'data', 'report_templates'))
         template = env.get_template('{}.html'.format('project_progress'))
@@ -192,3 +193,21 @@ class TestProjectProgressHtml(unittest.TestCase):
         _, html = report.generate_report(small_test_project, template, 'name@example.com')
 
         self.assertTrue('Aborted' in html)
+
+    def test_aborted_samples(self, get_entry, get_project_fc, mock_server):
+        '''Asserts the report renders without exceptions and ignores aborted samples on
+        the progress bars.'''
+        LOG = mock.Mock()
+        env = jinja_env(LOG, os.path.join(os.getcwd(), '..', 'data', 'report_templates'))
+        template = env.get_template('{}.html'.format('project_progress'))
+        get_entry.side_effect = mock_statusdb_get_project_aborted_samples
+        get_project_fc.return_value = mock_statusdb_flowcell()
+        report = Report(LOG, os.getcwd())
+
+        small_test_project = Project()
+        small_test_project.populate(LOG, {}, "P999", exclude_fc=[], continue_aborted_project=True)
+
+        _, html = report.generate_report(small_test_project, template, 'name@example.com')
+
+        self.assertTrue('6/6' in html)
+        self.assertTrue('7/7' not in html)
