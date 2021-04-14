@@ -2,6 +2,7 @@ import unittest
 from unittest import mock
 import os
 import json
+import pkg_resources
 
 from ngi_reports.reports.project_progress import Report
 from ngi_reports.utils.entities import Project
@@ -9,7 +10,7 @@ from ngi_reports.log import loggers
 from ngi_reports.ngi_reports import jinja_env
 
 LOG = loggers.minimal_logger('NGI Reports')
-
+TEMPLATE_PATH = pkg_resources.resource_filename('ngi_reports', "report_templates")
 
 def mock_statusdb_get_entry(key, use_id_view=False):
     '''Mock values for documents from statusdb
@@ -161,7 +162,7 @@ class TestProjectProgressHtml(unittest.TestCase):
     def test_regular_project(self, get_entry, get_project_fc, mock_server):
         '''Asserts the report generation renders without exceptions'''
         LOG = mock.Mock()
-        env = jinja_env(LOG, os.path.join(os.getcwd(), '..', 'data', 'report_templates'))
+        env = jinja_env(LOG, TEMPLATE_PATH)
         template = env.get_template('{}.html'.format('project_progress'))
         get_entry.side_effect = mock_statusdb_get_entry
         get_project_fc.return_value = mock_statusdb_flowcell()
@@ -181,7 +182,7 @@ class TestProjectProgressHtml(unittest.TestCase):
 
         when the project was aborted.'''
         LOG = mock.Mock()
-        env = jinja_env(LOG, os.path.join(os.getcwd(), '..', 'data', 'report_templates'))
+        env = jinja_env(LOG, TEMPLATE_PATH)
         template = env.get_template('{}.html'.format('project_progress'))
         get_entry.side_effect = mock_statusdb_get_aborted_project
         get_project_fc.return_value = mock_statusdb_flowcell()
@@ -198,7 +199,7 @@ class TestProjectProgressHtml(unittest.TestCase):
         '''Asserts the report renders without exceptions and ignores aborted samples on
         the progress bars.'''
         LOG = mock.Mock()
-        env = jinja_env(LOG, os.path.join(os.getcwd(), '..', 'data', 'report_templates'))
+        env = jinja_env(LOG, TEMPLATE_PATH)
         template = env.get_template('{}.html'.format('project_progress'))
         get_entry.side_effect = mock_statusdb_get_project_aborted_samples
         get_project_fc.return_value = mock_statusdb_flowcell()
