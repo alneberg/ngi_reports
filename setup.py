@@ -23,7 +23,7 @@ setup(
     author_email='phil.ewels@scilifelab.se',
     url='https://github.com/NationalGenomicsInfrastructure/ngi_reports',
     license='MIT',
-    packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
+    packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
     entry_points={"console_scripts": ["ngi_reports=ngi_reports.ngi_reports:main"]},
