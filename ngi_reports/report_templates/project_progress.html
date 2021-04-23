@@ -179,8 +179,20 @@
               {% for sample_id, sample in project.samples.items() %}
                 <tr>
                   <th scope="row">{{ sample_id }}</th>
-                  {% for attribute, column_dict in meta['RC_columns'].items() %}
-                    <td class="{{attribute}} {{column_dict.get('custom_classes', '')}}" scope="col">{{ sample.attributes_as_dict()[attribute] }}</th>
+                  <!-- Assign color for pass/fail for sample on specific status column -->
+                  {% for attribute, table_field in meta['RC_columns'].items() %}
+                    {% if attribute == meta['RC_status_column'] %}
+                      {% if sample.attributes_as_dict()[attribute] == 'PASSED' %}
+                        {% set RC_status_class = ' table-success' %}
+                      {% elif sample.attributes_as_dict()[attribute] == 'UNKNOWN' %}
+                        {% set RC_status_class = ' table-warning' %}
+                      {% else %}
+                        {% set RC_status_class = ' table-danger' %}
+                      {% endif %}
+                    {% else %}
+                      {% set RC_status_class = '' %}
+                    {% endif %}
+                    <td class="{{attribute}} {{table_field.custom_classes}}{{ RC_status_class }}" scope="col">{{ sample.attributes_as_dict()[attribute] }}</th>
                   {% endfor %}
                 </tr>
               {% endfor %}
