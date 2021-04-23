@@ -144,15 +144,15 @@
                       </tr>
                     </thead>
                     <tbody>
-                      {% for attribute, column_dict in meta['RC_columns'].items() %}
+                      {% for attribute, table_field in meta['RC_columns'].items() %}
                         <tr class="{{ attribute }}">
                           <td>
                             <div class="form-check">
-                              <input class="form-check-input table_col_visible" type="checkbox" value="{{ attribute }}" data-target="#RC_table" id="check_rc_columns_{{ attribute }}" {% if column_dict['visible_by_default'] %} checked{% endif %}>
+                              <input class="form-check-input table_col_visible" type="checkbox" value="{{ attribute }}" data-target="#RC_table" id="check_rc_columns_{{ attribute }}" {% if table_field.visible_by_default %} checked{% endif %}>
                             </div>
                           </td>
-                          <th scope="row">{{ column_dict['display_title'] }}</th>
-                          <td scope="col">{{ column_dict['explanation'] }}</td>
+                          <th scope="row">{{ table_field.display_title }}</th>
+                          <td scope="col">{{ table_field.explanation }}</td>
                         </tr>
                       {% endfor %}
                     </tbody>
@@ -170,8 +170,8 @@
             <thead>
               <tr>
                 <th scope="col">ID</th>
-                {% for attribute, column_dict in meta['RC_columns'].items() %}
-                  <th class="{{attribute}}" scope="col">{{ column_dict['display_title'] }}</th>
+                {% for attribute, table_field in meta['RC_columns'].items() %}
+                  <th class="{{attribute}}" scope="col">{{ table_field.display_title }}</th>
                 {% endfor %}
               </tr>
             </thead>
