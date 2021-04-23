@@ -108,7 +108,6 @@ class Project:
         self.aborted_samples = OrderedDict()
         self.samples = OrderedDict()
         self.flowcells = {}
-        self.aborted = False
         self.accredited = { 'library_preparation': 'N/A',
                             'data_processing': 'N/A',
                             'sequencing': 'N/A',
@@ -143,6 +142,16 @@ class Project:
         self.skip_fastq = False
         self.user_ID = ''
 
+        self.aborted = None
+        self.closed = None
+        self.ongoing = None
+        self.open = None
+        self.pending = None
+        self.reception_control = None
+        self.need_review = None
+
+        self.status = None
+
     def populate(self, log, organism_names, project, **kwargs):
 
         if not project:
@@ -174,11 +183,24 @@ class Project:
             raise BaseException
 
         proj_details = proj.get('details', {})
+        status_fields = proj.get('status_fields')
+
+        if not status_fields:
+            raise ValueError("Need status_fields key in project document")
+
+        self.aborted = status_fields['aborted']
+        self.closed = status_fields['closed']
+        self.ongoing = status_fields['ongoing']
+        self.open = status_fields['open']
+        self.pending = status_fields['pending']
+        self.reception_control = status_fields['reception_control']
+        self.need_review = status_fields['need_review']
+
+        self.status = status_fields['status']
 
         continue_aborted_project = kwargs.get('continue_aborted_project')
         if 'aborted' in proj_details:
-            log.warn('Project {} was aborted, so not proceeding.'.format(project))
-            self.aborted = True
+            log.warn('Project {} was aborted.'.format(project))
             if not continue_aborted_project:
                 sys.exit('Project {} was aborted, stopping execution...'.format(project))
 
@@ -226,7 +248,7 @@ class Project:
                 log.info('Will not include sample {} as it is not in given list'.format(sample_id))
                 continue
 
-            customer_name = sample.get('customer_name','NA')
+            customer_name = sample.get('customer_name', 'NA')
             #Get once for a project
             if self.dates['first_initial_qc_start_date'] is not None:
                 self.dates['first_initial_qc_start_date'] = sample.get('first_initial_qc_start_date')
@@ -268,6 +290,7 @@ class Project:
                 samObj.initial_qc_volume_ul = sample['initial_qc'].get('volume_(ul)')
 
             #Library prep
+
             ## get total reads if available or mark sample as not sequenced
             try:
                 #check if sample was sequenced. More accurate value will be calculated from flowcell yield
