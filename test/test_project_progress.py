@@ -41,6 +41,9 @@ def mock_statusdb_get_aborted_project(key, use_id_view=False):
 
     if key == 'P999':
         json_data['details']['aborted'] = '2020-01-01'
+        json_data['status_fields']['status'] = 'Aborted'
+        json_data['status_fields']['aborted'] = True
+        json_data['status_fields']['closed'] = True
 
     return json_data
 

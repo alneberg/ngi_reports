@@ -808,5 +808,15 @@
     },
     "modification_time": "2020-03-21T02:45:51.105985",
     "affiliation": "SU-Stockholm",
-    "contact": "Project.Projectsson@slu.se"
+    "contact": "Project.Projectsson@slu.se",
+    "status_fields": {
+        "status": "closed",
+        "aborted": false,
+        "closed": true,
+        "need_review": false,
+        "ongoing": false,
+        "reception_control": false,
+        "open": false,
+        "pending": false
+    }
 }
