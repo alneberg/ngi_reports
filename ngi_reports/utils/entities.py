@@ -27,6 +27,8 @@ class Sample:
         self.initial_qc_start_date = None
         self.initial_qc_volume_ul = None
 
+        self.library_prep_status = None
+
         self.sample_buffer = None
         self.sample_type = None
         self.user_amount = None
@@ -38,7 +40,17 @@ class Sample:
 
     def attributes_as_dict(self):
         """python built-in vars method is not available inside jinja"""
-        return vars(self)
+        return_d = vars(self)
+        return_d.update({'libprep_passed': self.libprep_passed})
+        return return_d
+
+    @property
+    def libprep_passed(self):
+        for prep_id, prep in self.preps.items():
+            if prep.qc_status == 'PASSED':
+                return True
+        return False
+
 
 class Prep:
     """Prep class
@@ -48,6 +60,16 @@ class Prep:
         self.barcode     = 'NA'
         self.label       = ''
         self.qc_status   = 'NA'
+        self.amount_taken = None
+        self.concentration = None
+        self.concentration_units = None
+        self.volume = None
+        self.prep_finished_date = None
+
+    def attributes_as_dict(self):
+        """python built-in vars method is not available inside jinja"""
+        return vars(self)
+
 
 class Flowcell:
     """Flowcell class
@@ -288,18 +310,19 @@ class Project:
                 samObj.initial_qc_start_date = sample['initial_qc'].get('start_date')
                 samObj.initial_qc_volume_ul = sample['initial_qc'].get('volume_(ul)')
 
-            #Library prep
 
             ## get total reads if available or mark sample as not sequenced
             try:
                 #check if sample was sequenced. More accurate value will be calculated from flowcell yield
                 total_reads = float(sample['details']['total_reads_(m)'])
             except KeyError:
-                log.warn('Sample {} doesnt have total reads, so adding it to NOT sequenced samples list.'.format(sample_id))
-                self.aborted_samples[sample_id] = AbortedSampleInfo(customer_name, 'Not sequenced')
-                ## dont gather unnecessary information if not going to be looked up
-                if not kwargs.get('yield_from_fc'):
-                    continue
+                continue_not_sequenced_samples = kwargs.get('continue_aborted_project')
+                if not continue_not_sequenced_samples:
+                    log.warn('Sample {} doesnt have total reads, so adding it to NOT sequenced samples list.'.format(sample_id))
+                    self.aborted_samples[sample_id] = AbortedSampleInfo(customer_name, 'Not sequenced')
+                    ## dont gather unnecessary information if not going to be looked up
+                    if not kwargs.get('yield_from_fc'):
+                        continue
 
             ## Go through each prep for each sample in the Projects database
             for prep_id, prep in list(sample.get('library_prep', {}).items()):
@@ -308,19 +331,27 @@ class Project:
                 if prep.get('reagent_label') and prep.get('prep_status'):
                     prepObj.barcode = prep.get('reagent_label', 'NA')
                     prepObj.qc_status = prep.get('prep_status', 'NA')
+                    prepObj.prep_finished_date = prep.get('prep_finished_date', 'NA')
                 else:
                     log.warn('Could not fetch barcode/prep status for sample {} in prep {}'.format(sample_id, prep_id))
 
-                if 'pcr-free' not in self.library_construction.lower():
-                    if prep.get('library_validation'):
-                        lib_valids = prep['library_validation']
-                        keys = sorted([k for k in list(lib_valids.keys()) if re.match('^[\d\-]*$',k)], key=lambda k: datetime.strptime(lib_valids[k]['start_date'], '%Y-%m-%d'), reverse=True)
+                prepObj.amount_taken = prep.get('amount_taken_(ng)')
+                if prep.get('library_validation'):
+                    lib_valids = prep['library_validation']
+                    keys = sorted([k for k in list(lib_valids.keys()) if re.match('^[\d\-]*$',k)], key=lambda k: datetime.strptime(lib_valids[k]['start_date'], '%Y-%m-%d'), reverse=True)
+                    latest_libval = lib_valids[keys[0]]
+
+                    prepObj.concentration = latest_libval.get('concentration')
+                    prepObj.concentration_units = latest_libval.get('conc_units')
+                    prepObj.volume = latest_libval.get('volume_(ul)')
+
+                    if 'pcr-free' not in self.library_construction.lower():
                         try:
-                            prepObj.avg_size = re.sub(r'(\.[0-9]{,2}).*$', r'\1', str(lib_valids[keys[0]]['average_size_bp']))
-                        except:
+                            prepObj.avg_size = re.sub(r'(\.[0-9]{,2}).*$', r'\1', str(latest_libval['average_size_bp']))
+                        except KeyError:
                             log.warn('Insufficient info "{}" for sample {}'.format('average_size_bp', sample_id))
-                    else:
-                        log.warn('No library validation step found {}'.format(sample_id))
+                else:
+                    log.warn('No library validation step found {}'.format(sample_id))
 
                 samObj.preps[prep_id] = prepObj
 
@@ -511,7 +542,10 @@ class Project:
                 self.samples_unit = 'Kreads'
                 samples_divisor = 1000
         for sample in self.samples:
-            self.samples[sample].total_reads = '{:.2f}'.format(self.samples[sample].total_reads/float(samples_divisor))
+            if self.samples[sample].total_reads is None:
+                self.samples[sample].total_reads = ''
+            else:
+                self.samples[sample].total_reads = '{:.2f}'.format(self.samples[sample].total_reads/float(samples_divisor))
 
 
 

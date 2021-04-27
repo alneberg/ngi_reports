@@ -121,7 +121,7 @@ def make_reports(report_type, working_dir=os.getcwd(), config_file=None, **kwarg
         os.chdir(old_cwd)
     elif report_type == 'project_progress':
         # Populate the project, allowing for aborted projects
-        proj.populate(LOG, config._sections['organism_names'], project_id_or_name, continue_aborted_project=True, **kwargs)
+        proj.populate(LOG, config._sections['organism_names'], project_id_or_name, continue_aborted_project=True, continue_not_sequenced_samples=True, **kwargs)
         template = env.get_template('{}.html'.format(report_type))
         output_bn, html = report.generate_report(proj, template, config.get('ngi_reports', 'support_email'))
         out_path = os.path.realpath(os.path.join(os.getcwd(), 'project_progress.html'))

@@ -208,39 +208,49 @@
         <a class="card_collapse_link" data-bs-toggle="collapse" data-bs-target="#libprep_card_body" role="button" aria-expanded="false" aria-controls="#libprep_card_body">
           <h3 >Library Preparation</h3>
           <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">170/200</div>
+            <div class="progress-bar {{ meta['library_progress_class'] }}" role="progressbar" style="width: {{ meta['libprep_progress_width'] }}%" aria-valuenow="{{ meta['libprep_progress_width'] }}" aria-valuemin="0" aria-valuemax="100">{{ meta['libprep_passed'] }}/{{ meta['nr_samples'] }}</div>
           </div>
         </a>
       </div>
       <div class="collapse" id="libprep_card_body">
         <div class="card-body">
-          <table class="table">
+          <table class="table table-sm mt-2" id="Libprep_table">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">ID</th>
+                {% for attribute, table_field in meta['libprep_sample_columns'].items() %}
+                  <th class="{{attribute}}" scope="col">{{ table_field.display_title }}</th>
+                {% endfor %}
+                {% for attribute, table_field in meta['libprep_prep_columns'].items() %}
+                  <th class="{{attribute}}" scope="col">{{ table_field.display_title }}</th>
+                {% endfor %}
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-              </tr>
+              {% for sample_id, sample in project.samples.items() %}
+                {% for prep_id, prep in sample.preps.items() %}
+                  <tr>
+                    <th scope="row">{{ sample_id }}</th>
+                    {% for attribute, table_field in meta['libprep_sample_columns'].items() %}
+                      <td class="{{attribute}} {{table_field.custom_classes}}" scope="col">{{ sample.attributes_as_dict()[attribute] }}</th>
+                    {% endfor %}
+                    {% for attribute, table_field in meta['libprep_prep_columns'].items() %}
+                      {% if attribute == meta['libprep_status_column'] %}
+                        {% if prep.attributes_as_dict()[attribute] == 'PASSED' %}
+                          {% set libprep_status_class = ' table-success' %}
+                        {% elif prep.attributes_as_dict()[attribute] == 'UNKNOWN' %}
+                          {% set libprep_status_class = ' table-warning' %}
+                        {% else %}
+                          {% set libprep_status_class = ' table-danger' %}
+                        {% endif %}
+                      {% else %}
+                        {% set libprep_status_class = '' %}
+                      {% endif %}
+                      <td class="{{attribute}} {{table_field.custom_classes}} {{libprep_status_class}}" scope="col">{{ prep.attributes_as_dict()[attribute] }}</th>
+                    {% endfor %}
+                  </tr>
+                {% endfor %}
+              {% endfor %}
             </tbody>
           </table>
         </div>

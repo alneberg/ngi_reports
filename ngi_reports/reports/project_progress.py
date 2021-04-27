@@ -52,13 +52,24 @@ class Report(ngi_reports.reports.BaseReport):
         self.meta['RC_status_width'] = 0
         self.meta['RC_status_column'] = 'initial_qc_status'
 
-    def generate_report(self, proj, template, support_email):
-        self.project = proj
-        self.meta['subtitle'] = "{}_project_progress".format(self.project.ngi_name)
-        self.meta['support_email'] = support_email
+        self.meta['libprep_sample_columns'] = {
+                'customer_name': TableField('Submitted ID', 'Sample ID submitted by user', True)
+            }
+        self.meta['libprep_prep_columns'] = {
+                'label': TableField('Library Prep', '', True),
+                'amount_taken': TableField('Amount Taken (ng)', '', True),
+                'barcode': TableField('Reagent Label', '', False),
+                'qc_status': TableField('Status', '', True),
+                'concentration': TableField('Concentration', '', True),
+                'concentration_units': TableField('Conc. units', '', True),
+                'volume': TableField('Volume (&micro;l)', '', True),
+                'prep_finished_date': TableField('Library prep finished date', '', True)
+            }
+        self.meta['libprep_status_column'] = 'qc_status'
+        self.meta['libprep_passed'] = 0
+        self.meta['libprep_status_width'] = 0
 
-        # Figure out nr of passed samples for each step
-        self.meta['nr_samples'] = len(self.project.samples)
+    def _setup_reception_control(self):
         for sample_id, sample in self.project.samples.items():
             if sample.initial_qc_status == 'PASSED':
                 self.meta['RC_passed'] += 1
@@ -72,6 +83,29 @@ class Report(ngi_reports.reports.BaseReport):
             self.meta['RC_progress_class'] = 'bg-success'
         else:
             self.meta['RC_progress_class'] = ''
+
+    def _setup_library_prep(self):
+        for sample_id, sample in self.project.samples.items():
+            if sample.libprep_passed:
+                self.meta['libprep_passed'] += 1
+        if self.meta['nr_samples'] != 0:
+            self.meta['libprep_progress_width'] = round(100 * self.meta['libprep_passed'] / float(self.meta['nr_samples']))
+        else:
+            self.meta['libprep_progress_width'] = 0
+        if self.meta['libprep_progress_width'] == 100:
+            self.meta['libprep_progress_width'] = 'bg-success'
+        else:
+            self.meta['libprep_progress_class'] = ''
+
+    def generate_report(self, proj, template, support_email):
+        self.project = proj
+        self.meta['subtitle'] = "{}_project_progress".format(self.project.ngi_name)
+        self.meta['support_email'] = support_email
+
+        # Figure out nr of passed samples for each step
+        self.meta['nr_samples'] = len(self.project.samples)
+        self._setup_reception_control()
+        self._setup_library_prep()
 
         # Make the file basename
         output_bn = os.path.realpath(os.path.join(self.working_dir, self.report_dir, self.report_fn))
